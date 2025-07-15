@@ -94,41 +94,6 @@ func (j *JSONMap) Scan(src any) error {
 	return nil
 }
 
-// Value implements the driver.Valuer interface.
-func (j JSONMap) Value() (any, error) {
-	if j == nil {
-		return "{}", nil
-	}
-	return json.Marshal(j)
-}
-
-// SafeSet creates a new JSONMap from the input, ensuring it's valid JSON
-// If the input can't be marshaled to valid JSON, it returns an empty JSONMap
-func SafeJSON(input any) JSONMap {
-	if input == nil {
-		return JSONMap{}
-	}
-
-	if urlStr, ok := input.(string); ok && urlStr != "" {
-		return JSONMap{
-			"raw": urlStr,
-		}
-	}
-
-	result := JSONMap{}
-
-	bytes, err := json.Marshal(input)
-	if err != nil {
-		return JSONMap{}
-	}
-
-	if err := json.Unmarshal(bytes, &result); err != nil {
-		return JSONMap{}
-	}
-
-	return result
-}
-
 // PostmanCollection represents the full structure of a Postman collection
 type PostmanCollection struct {
 	Info     CollectionInfo  `json:"info"`
@@ -193,7 +158,7 @@ type KeyValuePair struct {
 	Name        string `json:"name,omitempty"`
 }
 
-// PostmanResponse represents an example response in a Postman collection
+// PostmanResponse represents an response in a Postman collection
 type PostmanResponse struct {
 	Name        string            `json:"name"`
 	OriginalReq json.RawMessage   `json:"originalRequest,omitempty"`
@@ -206,7 +171,7 @@ type PostmanResponse struct {
 	PostmanID   string            `json:"id,omitempty"`
 }
 
-// PostmanEvent represents event scripts in Postman (pre-request, tests)
+// PostmanEvent represents event scripts in Postman
 type PostmanEvent struct {
 	Listen   string        `json:"listen"`
 	Script   PostmanScript `json:"script"`
@@ -221,7 +186,7 @@ type PostmanScript struct {
 	Src  string   `json:"src,omitempty"`
 }
 
-// URLObject represents a URL in Postman (which can be a string or complex object)
+// URLObject represents a URL in Postman
 type URLObject struct {
 	Raw      string         `json:"raw,omitempty"`
 	Protocol string         `json:"protocol,omitempty"`
