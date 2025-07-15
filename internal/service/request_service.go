@@ -169,7 +169,7 @@ func (s *RequestService) UpdateRequestPayload(ctx context.Context, id int64, bod
 }
 
 // UpdateRequestHeaders updates only the headers of a request
-func (s *RequestService) UpdateRequestHeaders(ctx context.Context, id int64, headers []models.KeyValuePair) error {
+func (s *RequestService) UpdateRequestHeaders(ctx context.Context, id int64, headers map[string]string) error {
 	if headers == nil {
 		return errors.New("headers cannot be nil")
 	}

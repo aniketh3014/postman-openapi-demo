@@ -210,7 +210,11 @@ func (s *CollectionService) processPostmanItems(ctx context.Context, items []mod
 		request.URL = urlMap
 
 		if len(item.Request.Header) > 0 {
-			request.Headers = item.Request.Header
+			headers := make(map[string]string)
+			for _, kv := range item.Request.Header {
+				headers[kv.Key] = kv.Value
+			}
+			request.Headers = headers
 		}
 
 		bodyBytes, err := json.Marshal(item.Request.Body)
@@ -329,7 +333,11 @@ func (s *CollectionService) ExportPostmanCollection(ctx context.Context, id int6
 		}
 
 		if req.Headers != nil {
-			postmanReq.Header = req.Headers
+			var headerArr []models.KeyValuePair
+			for k, v := range req.Headers {
+				headerArr = append(headerArr, models.KeyValuePair{Key: k, Value: v})
+			}
+			postmanReq.Header = headerArr
 		}
 
 		if req.Body != nil {

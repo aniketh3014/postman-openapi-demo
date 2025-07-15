@@ -25,7 +25,7 @@ type RequestService interface {
 	ListRequestsByCollection(ctx context.Context, collectionID int64, page, pageSize int) ([]*models.Request, int, error)
 	DeleteRequest(ctx context.Context, id int64) error
 	UpdateRequestPayload(ctx context.Context, id int64, body models.JSONMap) error
-	UpdateRequestHeaders(ctx context.Context, id int64, headers []models.KeyValuePair) error
+	UpdateRequestHeaders(ctx context.Context, id int64, headers map[string]string) error
 	UpdateRequestParams(ctx context.Context, id int64, params models.JSONMap) error
 	CloneRequest(ctx context.Context, id int64, newName string) (int64, error)
 }

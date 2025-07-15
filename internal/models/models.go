@@ -31,22 +31,22 @@ type Collection struct {
 type Request struct {
 	bun.BaseModel `bun:"table:requests,alias:r"`
 
-	ID           int64          `bun:"id,pk,autoincrement" json:"id"`
-	CollectionID int64          `bun:"collection_id,notnull" json:"collection_id"`
-	Name         string         `bun:"name,notnull" json:"name"`
-	Description  string         `bun:"description" json:"description"`
-	FolderPath   string         `bun:"folder_path" json:"folder_path,omitempty"`
-	URL          JSONMap        `bun:"url,type:jsonb" json:"url"`
-	Method       string         `bun:"method,notnull" json:"method"`
-	Headers      []KeyValuePair `bun:"headers,type:jsonb" json:"headers,omitempty"`
-	Params       JSONMap        `bun:"params,type:jsonb" json:"params,omitempty"`
-	Body         JSONMap        `bun:"body,type:jsonb" json:"body,omitempty"`
-	Auth         JSONMap        `bun:"auth,type:jsonb" json:"auth,omitempty"`
-	Events       JSONMap        `bun:"events,type:jsonb" json:"events,omitempty"`
-	Responses    JSONMap        `bun:"responses,type:jsonb" json:"responses,omitempty"`
-	PostmanID    string         `bun:"postman_id" json:"_postman_id,omitempty"`
-	CreatedAt    time.Time      `bun:"created_at,notnull,default:current_timestamp" json:"created_at"`
-	UpdatedAt    time.Time      `bun:"updated_at,notnull,default:current_timestamp" json:"updated_at"`
+	ID           int64             `bun:"id,pk,autoincrement" json:"id"`
+	CollectionID int64             `bun:"collection_id,notnull" json:"collection_id"`
+	Name         string            `bun:"name,notnull" json:"name"`
+	Description  string            `bun:"description" json:"description"`
+	FolderPath   string            `bun:"folder_path" json:"folder_path,omitempty"`
+	URL          JSONMap           `bun:"url,type:jsonb" json:"url"`
+	Method       string            `bun:"method,notnull" json:"method"`
+	Headers      map[string]string `bun:"headers,type:jsonb" json:"headers,omitempty"`
+	Params       JSONMap           `bun:"params,type:jsonb" json:"params,omitempty"`
+	Body         JSONMap           `bun:"body,type:jsonb" json:"body,omitempty"`
+	Auth         JSONMap           `bun:"auth,type:jsonb" json:"auth,omitempty"`
+	Events       JSONMap           `bun:"events,type:jsonb" json:"events,omitempty"`
+	Responses    JSONMap           `bun:"responses,type:jsonb" json:"responses,omitempty"`
+	PostmanID    string            `bun:"postman_id" json:"_postman_id,omitempty"`
+	CreatedAt    time.Time         `bun:"created_at,notnull,default:current_timestamp" json:"created_at"`
+	UpdatedAt    time.Time         `bun:"updated_at,notnull,default:current_timestamp" json:"updated_at"`
 
 	Collection *Collection `bun:"rel:belongs-to,join:collection_id=id" json:"collection,omitempty"`
 }

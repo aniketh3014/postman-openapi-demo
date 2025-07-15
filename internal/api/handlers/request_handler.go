@@ -139,7 +139,7 @@ func (h *RequestHandler) UpdateHeaders(c *gin.Context) {
 		return
 	}
 
-	var headers []models.KeyValuePair
+	var headers map[string]string
 	if err := c.ShouldBindJSON(&headers); err != nil {
 		SendBadRequest(c, "Invalid headers body: "+err.Error())
 		return
