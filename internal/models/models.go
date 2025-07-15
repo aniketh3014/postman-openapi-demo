@@ -35,8 +35,8 @@ type Request struct {
 	CollectionID int64          `bun:"collection_id,notnull" json:"collection_id"`
 	Name         string         `bun:"name,notnull" json:"name"`
 	Description  string         `bun:"description" json:"description"`
-	FolderPath   string         `bun:"folder_path" json:"folder_path,omitempty"` // Store path like "Folder/Subfolder"
-	URL          JSONMap        `bun:"url,type:jsonb" json:"url"`                // Store full URL object
+	FolderPath   string         `bun:"folder_path" json:"folder_path,omitempty"`
+	URL          JSONMap        `bun:"url,type:jsonb" json:"url"`
 	Method       string         `bun:"method,notnull" json:"method"`
 	Headers      []KeyValuePair `bun:"headers,type:jsonb" json:"headers,omitempty"`
 	Params       JSONMap        `bun:"params,type:jsonb" json:"params,omitempty"`
@@ -48,7 +48,6 @@ type Request struct {
 	CreatedAt    time.Time      `bun:"created_at,notnull,default:current_timestamp" json:"created_at"`
 	UpdatedAt    time.Time      `bun:"updated_at,notnull,default:current_timestamp" json:"updated_at"`
 
-	// Relations
 	Collection *Collection `bun:"rel:belongs-to,join:collection_id=id" json:"collection,omitempty"`
 }
 
@@ -86,7 +85,6 @@ func (j *JSONMap) Scan(src any) error {
 		return nil
 	}
 
-	// Try to unmarshal the JSON
 	err := json.Unmarshal(sourceBytes, j)
 	if err != nil {
 		*j = make(JSONMap)
