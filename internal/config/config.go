@@ -12,7 +12,6 @@ import (
 type Config struct {
 	Server   ServerConfig
 	Database DatabaseConfig
-	App      AppConfig
 }
 
 type ServerConfig struct {
@@ -30,12 +29,6 @@ type DatabaseConfig struct {
 	DBName   string
 	SSLMode  string
 	DSN      string
-}
-
-type AppConfig struct {
-	Environment string
-	LogLevel    string
-	JWTSecret   string
 }
 
 func Load() (*Config, error) {
@@ -70,11 +63,6 @@ func Load() (*Config, error) {
 			WriteTimeout: parseDuration(os.Getenv("WRITE_TIMEOUT")),
 		},
 		Database: dbConfig,
-		App: AppConfig{
-			Environment: os.Getenv("APP_ENV"),
-			LogLevel:    os.Getenv("LOG_LEVEL"),
-			JWTSecret:   os.Getenv("JWT_SECRET"),
-		},
 	}
 
 	return config, nil
